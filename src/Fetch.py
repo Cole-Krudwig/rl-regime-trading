@@ -1,6 +1,7 @@
 import os
 import requests
 import pandas as pd
+import numpy as np
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,7 +16,6 @@ class Fetch:
         r = requests.get(url)
         data = r.json()
         return data
-        print(data)
 
     def json_to_df(self, data):
         ts = data["Time Series (Daily)"]
@@ -37,9 +37,6 @@ class Fetch:
     def fetch(self, symbol):
         data = self.get_daily(symbol=symbol)
         df = self.json_to_df(data)
+        df['Log_Return'] = np.log(
+            df['close'] / df['close'].shift(1))
         return df
-
-
-fetcher = Fetch()
-df = fetcher.fetch("SPY")
-print(df.head)
