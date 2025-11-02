@@ -1,5 +1,5 @@
 from src.Fetch import Fetch
-from src.Process import Process
+from StochasticFeatureEngine import Process
 
 fetcher = Fetch()
 df = fetcher.fetch("SPY")
