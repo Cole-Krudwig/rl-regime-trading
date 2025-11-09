@@ -22,6 +22,7 @@ class TradingStrategies:
         self.CASH_WEIGHT = 0.0
         self.FULL_LONG_WEIGHT = 1.0
         self.SMALL_SHORT_WEIGHT = -0.5  # Short up to 50% for defense/bearish view
+        self.RFR = 0.02
 
     def momentum_strategy(self, t: int) -> float:
         """
@@ -30,7 +31,7 @@ class TradingStrategies:
         Returns: Portfolio weight (pi_t) in the risky asset.
         """
         # We assume the decision to enter this strategy means going fully long.
-        return self.FULL_LONG_WEIGHT
+        return self.FULL_LONG_WEIGHT, (1-self.FULL_LONG_WEIGHT)
 
     def mean_reversion_strategy(self, t: int) -> float:
         """
@@ -54,7 +55,7 @@ class TradingStrategies:
         # The scaling factor (e.g., -1.0) determines the aggressiveness.
         weight = np.clip(-residual * 0.5, -1.0, 1.0)
 
-        return weight
+        return weight, (1-weight)
 
     def defensive_strategy(self, t: int) -> float:
         """
@@ -65,7 +66,7 @@ class TradingStrategies:
         """
         # Use a small short position (50% short) to bet against the trend,
         # but the primary goal is risk reduction compared to A1 and A2.
-        return self.SMALL_SHORT_WEIGHT
+        return self.SMALL_SHORT_WEIGHT, (1-self.SMALL_SHORT_WEIGHT)
 
     def calculate_strategy_returns(self, t: int, action: int) -> float:
         """
@@ -81,11 +82,11 @@ class TradingStrategies:
 
         # Map discrete action index to the strategy weight function
         if action == 0:
-            weight = self.momentum_strategy(t)
+            weight, cash_weight = self.momentum_strategy(t)
         elif action == 1:
-            weight = self.mean_reversion_strategy(t)
+            weight, cash_weight = self.mean_reversion_strategy(t)
         elif action == 2:
-            weight = self.defensive_strategy(t)
+            weight, cash_weight = self.defensive_strategy(t)
         else:
             raise ValueError("Invalid action index.")
 
@@ -95,4 +96,4 @@ class TradingStrategies:
         risky_return = self.data['Log_Return'].iloc[t]
 
         # Portfolio return is simplified to pi_t * Risky_Return
-        return weight * risky_return
+        return (weight * risky_return) + (cash_weight * self.RFR)

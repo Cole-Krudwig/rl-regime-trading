@@ -9,8 +9,10 @@ from TradingStrategies import TradingStrategies
 
 if __name__ == '__main__':
 
-    fetcher = Fetch()
-    df = fetcher.fetch("SPY")
+    # fetcher = Fetch()
+    # df = fetcher.fetch("SPY")
+    df = pd.read_csv(
+        '/Users/colekrudwig/Programming/rl-regime-trading/data/spy.csv', index_col=0)
     engine = StochasticFeatureEngine(df)
     processed_df = engine.calculate_all_features()
     # print(processed_df.head())
@@ -34,7 +36,7 @@ if __name__ == '__main__':
     print(f"   Initial Utility (V_0): {round(env.last_utility, 4)}")
 
     # Define a simple sequence of actions: 5x Momentum (0), 5x Defensive (2)
-    test_actions = [0] * 5 + [2] * 5
+    test_actions = [0] * 500 + [2] * 100 + [1] * 100
     total_reward = 0
 
     print("\n2. Simulating 10 Steps (Momentum then Defensive):")
@@ -42,7 +44,7 @@ if __name__ == '__main__':
     for i, action in enumerate(test_actions):
 
         # Get price information for printout
-        current_date = env.data.index[env.current_step + 1].date()
+        # current_date = env.data.index[env.current_step + 1].date()
 
         # Step
         obs, reward, terminated, truncated, info = env.step(action)
@@ -52,11 +54,12 @@ if __name__ == '__main__':
         w_norm = round(obs[-1], 6)
         w_final = round(w_norm * env.INITIAL_WEALTH, 2)
 
-        print(f"   [{current_date}] Action {action}: Wealth={w_final} | Utility Change={reward:+.6f} | Terminated={terminated}")
+        print(
+            f"    Action {action}: Wealth={w_final} | Utility Change={reward:+.9f} | Terminated={terminated}")
 
         if terminated:
             break
 
     print("\n3. Simulation Summary:")
-    print(f"   Total Cumulative HJB Reward: {total_reward:+.4f}")
+    print(f"   Total Cumulative HJB Reward: {total_reward:+.9f}")
     print(f"   Final Portfolio Value: {w_final}")
