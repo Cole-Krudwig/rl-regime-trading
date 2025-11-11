@@ -96,4 +96,4 @@ class TradingStrategies:
         risky_return = self.data['Log_Return'].iloc[t]
 
         # Portfolio return is simplified to pi_t * Risky_Return
-        return (weight * risky_return) + (cash_weight * self.RFR)
+        return (weight * risky_return)  # + (cash_weight * self.RFR)
