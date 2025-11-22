@@ -10,3 +10,5 @@ midterm/
 *.aux
 *.out
 *.gz
+*.pkl
+*.zip
