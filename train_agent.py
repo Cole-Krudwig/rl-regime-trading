@@ -90,8 +90,8 @@ def main():
         gamma=0.99,
         train_freq=4,
         target_update_interval=1_000,
-        exploration_fraction=0.2,
-        exploration_final_eps=0.05,
+        exploration_fraction=0.7,
+        exploration_final_eps=0.1,
         verbose=1,
         tensorboard_log=LOG_DIR,
         # you can fix the seed if you want reproducibility
@@ -101,7 +101,7 @@ def main():
     # --- Training ---
     # --- Training ---
     # --- Training ---
-    total_timesteps = 1000  # tweak as needed
+    total_timesteps = 10000  # tweak as needed
 
     model.learn(
         total_timesteps=total_timesteps,
