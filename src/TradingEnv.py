@@ -17,9 +17,9 @@ class HJBTradingEnv(gym.Env):
 
     # --- HJB and Utility Parameters ---
     # CRRA Utility parameter (Gamma > 1 for risk aversion)
-    RISK_AVERSION_GAMMA = 2.0
+    RISK_AVERSION_GAMMA = 2
     INITIAL_WEALTH = 10000.0       # Starting portfolio value
-    REWARD_SCALE = 1e8
+    REWARD_SCALE = 1e6
     FEATURE_COLS = ['Drift_Short_Z', 'Drift_Long_Z', 'RV_Signal_Z',
                     'Vol_Trend_Z', 'MR_Residual_Z', 'Price_Velocity_Z']
 
@@ -163,6 +163,7 @@ class HJBTradingEnv(gym.Env):
         Performs one step of the environment based on the agent's action.
         Reward is the change in utility (HJB Objective).
         """
+        info = {}
 
         # Move to next time step
         self.current_step += 1
@@ -173,6 +174,9 @@ class HJBTradingEnv(gym.Env):
             reward = 0.0
 
             # Do NOT update wealth; just return final stacked obs
+            # But record the final wealth
+            info["terminal_wealth"] = self.current_wealth
+
         else:
             terminated = False
 
@@ -181,19 +185,20 @@ class HJBTradingEnv(gym.Env):
                 self.current_step,
                 action
             )
-
+            print(f"Portfolio Return: {portfolio_return}")
             # Update wealth
             self.current_wealth *= (1 + portfolio_return)
+            print(f"Wealth: {self.current_wealth}")
 
             # --- 2. HJB-Informed Reward Calculation (Utility Change) ---
             current_utility = self._power_utility(self.current_wealth)
-
             reward = self.REWARD_SCALE * (current_utility - self.last_utility)
 
             # Check for ruin (early termination)
             if self.current_wealth < 0.1 * self.INITIAL_WEALTH:
                 terminated = True
                 reward -= 100.0  # Large penalty for deep drawdown/ruin
+                info["terminal_wealth"] = self.current_wealth
 
             self.last_utility = current_utility
 
@@ -209,4 +214,4 @@ class HJBTradingEnv(gym.Env):
         print(f"Step obs: {observation}")
 
         # Gymnasium step returns: observation, reward, terminated, truncated, info
-        return observation, reward, terminated, False, {}
+        return observation, reward, terminated, False, info
