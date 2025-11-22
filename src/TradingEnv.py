@@ -19,11 +19,15 @@ class HJBTradingEnv(gym.Env):
     # CRRA Utility parameter (Gamma > 1 for risk aversion)
     RISK_AVERSION_GAMMA = 2
     INITIAL_WEALTH = 10000.0       # Starting portfolio value
-    REWARD_SCALE = 1e5
+    REWARD_SCALE = 1e7
+    LAMBDA = 5
+    U_WEIGHT = 1
+    S_WEIGHT = 1e2
+
     FEATURE_COLS = ['Drift_Short_Z', 'Drift_Long_Z', 'RV_Signal_Z',
                     'Vol_Trend_Z', 'MR_Residual_Z', 'Price_Velocity_Z']
 
-    LOOKBACK_STEPS = 14
+    LOOKBACK_STEPS = 21
 
     def __init__(self, data: pd.DataFrame, max_lookback_steps=252*2):
         """
@@ -192,6 +196,14 @@ class HJBTradingEnv(gym.Env):
 
             # --- 2. HJB-Informed Reward Calculation (Utility Change) ---
             current_utility = self._power_utility(self.current_wealth)
+
+            delta_utility = current_utility - self.last_utility
+            risk_adj_return = portfolio_return - \
+                self.LAMBDA * (portfolio_return ** 2)
+
+            reward = self.U_WEIGHT * self.REWARD_SCALE * \
+                delta_utility + self.S_WEIGHT * risk_adj_return
+
             reward = self.REWARD_SCALE * (current_utility - self.last_utility)
 
             # Check for ruin (early termination)
