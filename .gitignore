@@ -12,3 +12,4 @@ midterm/
 *.gz
 *.pkl
 *.zip
+models/
