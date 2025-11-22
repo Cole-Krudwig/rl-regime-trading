@@ -101,7 +101,7 @@ def main():
     # --- Training ---
     # --- Training ---
     # --- Training ---
-    total_timesteps = 10000  # tweak as needed
+    total_timesteps = 1000  # tweak as needed
 
     model.learn(
         total_timesteps=total_timesteps,
@@ -114,21 +114,30 @@ def main():
     print(f"Saved final model to: {model_path}")
 
     # --- Simple evaluation rollout using train_env ---
+    # Reset vectorized env (DummyVecEnv)
     obs = train_env.reset()
     done = False
     total_reward = 0.0
+    final_wealth = None  # we will fill this from infos
 
     while not done:
-        print('='*50)
+        print('=' * 50)
         action, _ = model.predict(obs, deterministic=True)
         print(action)
+
         obs, rewards, dones, infos = train_env.step(action)
         total_reward += float(rewards[0])
         done = bool(dones[0])
 
-    monitor_env = train_env.envs[0]
-    base_env = monitor_env.env
-    final_wealth = base_env.current_wealth
+        if done:
+            # infos is a list of dicts, one per env (we have 1 env)
+            final_wealth = infos[0].get("terminal_wealth", None)
+
+    # Fallback: if for some reason info wasn't set, use the env attribute
+    if final_wealth is None:
+        monitor_env = train_env.envs[0]
+        base_env = monitor_env.env
+        final_wealth = base_env.current_wealth
 
     print("\n=== Evaluation Summary (train slice) ===")
     print(f"Final Wealth: {final_wealth:.2f}")
