@@ -19,11 +19,11 @@ class HJBTradingEnv(gym.Env):
     # CRRA Utility parameter (Gamma > 1 for risk aversion)
     RISK_AVERSION_GAMMA = 2
     INITIAL_WEALTH = 10000.0       # Starting portfolio value
-    REWARD_SCALE = 1e6
+    REWARD_SCALE = 1e5
     FEATURE_COLS = ['Drift_Short_Z', 'Drift_Long_Z', 'RV_Signal_Z',
                     'Vol_Trend_Z', 'MR_Residual_Z', 'Price_Velocity_Z']
 
-    LOOKBACK_STEPS = 5
+    LOOKBACK_STEPS = 14
 
     def __init__(self, data: pd.DataFrame, max_lookback_steps=252*2):
         """
