@@ -2,3 +2,5 @@
 logs/
 midterm/
 .env
+.*
+!.gitignore
