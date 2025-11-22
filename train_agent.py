@@ -82,7 +82,7 @@ def main():
     model = DQN(
         policy="MlpPolicy",
         env=train_env,
-        learning_rate=.1,
+        learning_rate=.01,
         buffer_size=100_000,
         learning_starts=1_000,
         batch_size=64,
@@ -90,8 +90,8 @@ def main():
         gamma=0.99,
         train_freq=4,
         target_update_interval=1_000,
-        exploration_fraction=0.7,
-        exploration_final_eps=0.1,
+        exploration_fraction=0.8,
+        exploration_final_eps=0.05,
         verbose=1,
         tensorboard_log=LOG_DIR,
         # you can fix the seed if you want reproducibility

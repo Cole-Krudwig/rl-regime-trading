@@ -4,3 +4,9 @@ midterm/
 .env
 .*
 !.gitignore
+*.sty
+*.bib
+*.log
+*.aux
+*.out
+*.gz
