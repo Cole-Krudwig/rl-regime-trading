@@ -13,3 +13,4 @@ midterm/
 *.pkl
 *.zip
 models/
+src/__pycache__/
