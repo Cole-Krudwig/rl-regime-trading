@@ -23,30 +23,26 @@ Regime-Aware Reinforcement Learning for Trading. This project combines stochasti
 ```
 .
 ├─ app/
-│  ├─ data/                  # (optional) cached or sample data
-│  ├─ envs/
-│  │  └─ trading_env.py      # Gym-compatible environment
-│  ├─ strategies/
-│  │  ├─ momentum.py
-│  │  ├─ mean_reversion.py
-│  │  └─ defensive.py
-│  ├─ tools/
-│  │  ├─ data_fetcher.py     # AlphaVantage (or provider) wrapper
-│  │  ├─ features.py         # feature engineering utils
-│  │  └─ utils.py
-│  ├─ agents/
-│  │  └─ dqn.py              # DQN model + training loop helpers
-│  └─ __init__.py
-├─ configs/
-│  └─ dqn.yaml               # training & env hyperparams
-├─ notebooks/                # EDA / experiments
-├─ train.py                  # CLI entry for training
-├─ evaluate.py               # CLI entry for backtests/eval
+│  ├─ data/
+│  │  └─ spy.csv             # Or any compatible data
+│  ├─ logs/
+│  │  └─ # Generated log files
+│  ├─ literature/
+│  │  └─ Paper.pdf           # Arxiv Preprint
+│  ├─ models/
+│  │  └─ # Model save checkpoints
+│  ├─ src/
+│  │  ├─ __init__.py
+│  │  ├─ Fetch.py
+│  │  ├─ gather_data.ipynb
+│  │  ├─ StochasticFeatureEngine.py
+│  │  ├─ TradingEnv.py
+│  │  └─ TradingStrategies.py
+├─ evaluate_model.py
+├─ train_agent.py              
 ├─ requirements.txt          # python deps
 └─ README.md
 ```
-
-> Names mirror the slides; if your local repo uses slightly different paths, keep the ideas and adjust the imports accordingly.
 
 ---
 
