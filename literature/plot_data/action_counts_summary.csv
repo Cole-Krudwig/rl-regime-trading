@@ -1,0 +1,4 @@
+model,action_0,action_1,action_2
+DQN,1013,114,149
+PPO,135,803,338
+A2C,1256,0,20

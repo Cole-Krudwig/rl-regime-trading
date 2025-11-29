@@ -4,8 +4,8 @@ import os
 import numpy as np
 import pandas as pd
 
-from .TradingEnv import HJBTradingEnv
-from .FeatureEngine import StochasticFeatureEngine
+from .TradingEnv import TradingEnv
+from .FeatureEngine import FeatureEngine
 from .TradingStrategies import TradingStrategies
 
 
@@ -39,9 +39,9 @@ class BenchmarkEvaluator:
         self.train_df, self.test_df = self._split_train_test(self.full_df)
 
         # Env constants for consistency
-        self.LOOKBACK_STEPS = HJBTradingEnv.LOOKBACK_STEPS
-        self.INITIAL_WEALTH = float(HJBTradingEnv.INITIAL_WEALTH)
-        self.FEATURE_COLS = HJBTradingEnv.FEATURE_COLS
+        self.LOOKBACK_STEPS = TradingEnv.LOOKBACK_STEPS
+        self.INITIAL_WEALTH = float(TradingEnv.INITIAL_WEALTH)
+        self.FEATURE_COLS = TradingEnv.FEATURE_COLS
 
         # Risk-free rate per step
         self.daily_rfr = (1.0 + self.annual_rfr) ** (1.0 /
@@ -52,7 +52,7 @@ class BenchmarkEvaluator:
     def _build_full_data(self) -> pd.DataFrame:
         df = pd.read_csv(self.data_path, index_col=0)
 
-        engine = StochasticFeatureEngine(df)
+        engine = FeatureEngine(df)
         processed_df = engine.calculate_all_features()
 
         merged_df = pd.merge(

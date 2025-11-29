@@ -35,11 +35,11 @@ Regime-Aware Reinforcement Learning for Trading. This project combines stochasti
 │  │  ├─ __init__.py
 │  │  ├─ Fetch.py
 │  │  ├─ gather_data.ipynb
-│  │  ├─ StochasticFeatureEngine.py
+│  │  ├─ FeatureEngine.py
 │  │  ├─ TradingEnv.py
 │  │  └─ TradingStrategies.py
 ├─ evaluate_model.py
-├─ train_agent.py              
+├─ train_agent.py
 ├─ requirements.txt          # python deps
 └─ README.md
 ```

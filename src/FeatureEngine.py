@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-class StochasticFeatureEngine:
+class FeatureEngine:
     """
     Computes all necessary stochastic features for the RL agent's state space
     from raw daily financial data. 
@@ -153,6 +153,6 @@ class StochasticFeatureEngine:
 # index = pd.to_datetime(['2025-10-27', '2025-10-28', '2025-10-29', '2025-10-30', '2025-10-31'])
 # raw_df = pd.DataFrame(raw_data, index=index)
 #
-# engine = StochasticFeatureEngine(raw_df)
+# engine = FeatureEngine(raw_df)
 # processed_df = engine.calculate_all_features()
 # print(processed_df)

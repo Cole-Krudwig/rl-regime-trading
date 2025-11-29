@@ -5,11 +5,11 @@ import pandas as pd
 import math
 
 from .Fetch import Fetch
-from .FeatureEngine import StochasticFeatureEngine
+from .FeatureEngine import FeatureEngine
 from .TradingStrategies import TradingStrategies
 
 
-class HJBTradingEnv(gym.Env):
+class TradingEnv(gym.Env):
     """
     Gymnasium environment for HJB-Guided Stochastic Regime Meta-Control.
     The agent maximizes the change in Power Utility (HJB objective).
