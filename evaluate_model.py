@@ -8,7 +8,7 @@ from stable_baselines3 import DQN
 
 # ---- Adjust these imports to match your project structure ----
 from src.TradingEnv import HJBTradingEnv
-from src.StochasticFeatureEngine import StochasticFeatureEngine
+from src.FeatureEngine import StochasticFeatureEngine
 from src.TradingStrategies import TradingStrategies
 
 # Same paths as in train_agent.py (adjust if needed)
@@ -147,7 +147,8 @@ def evaluate_model(model_path: str) -> None:
     print(f"Sharpe Ratio (annualized): {sharpe:.3f}")
 
 
+'''
 if __name__ == "__main__":
     if not os.path.exists(MODEL_PATH):
         raise FileNotFoundError(f"Model file not found at: {MODEL_PATH}")
-    evaluate_model(MODEL_PATH)
+    evaluate_model(MODEL_PATH)'''

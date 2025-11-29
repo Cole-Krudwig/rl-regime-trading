@@ -39,4 +39,5 @@ class Fetch:
         df = self.json_to_df(data)
         df['Log_Return'] = np.log(
             df['close'] / df['close'].shift(1))
+        df.to_csv(f'../data/{symbol}.csv')
         return df
