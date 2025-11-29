@@ -15,7 +15,7 @@ from stable_baselines3.common.callbacks import (
 )
 
 from src.TradingEnv import HJBTradingEnv
-from src.StochasticFeatureEngine import StochasticFeatureEngine
+from src.FeatureEngine import StochasticFeatureEngine
 
 
 DATA_PATH = "data/spy.csv"
