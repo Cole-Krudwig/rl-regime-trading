@@ -11,6 +11,8 @@ midterm/
 *.out
 *.gz
 *.pkl
+*.bbl
+*.blg
 *.zip
 models/
 src/__pycache__/

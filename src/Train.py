@@ -10,8 +10,8 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.callbacks import CheckpointCallback
 
-from .TradingEnv import HJBTradingEnv
-from .FeatureEngine import StochasticFeatureEngine
+from .TradingEnv import TradingEnv
+from .FeatureEngine import FeatureEngine
 
 
 DATA_PATH = "data/spy.csv"
@@ -36,7 +36,7 @@ class Train:
         # --- Load and preprocess data once ---
         df = pd.read_csv(self.data_path, index_col=0)
 
-        engine = StochasticFeatureEngine(df)
+        engine = FeatureEngine(df)
         processed_df = engine.calculate_all_features()
 
         merged_df = pd.merge(
@@ -60,11 +60,11 @@ class Train:
 
     def make_trading_env(self, train: bool = True) -> gym.Env:
         """
-        Create a single HJBTradingEnv with train or test slice of data,
+        Create a single TradingEnv with train or test slice of data,
         wrapped in a Monitor.
         """
         data_slice = self._get_data_slice(train=train)
-        env = HJBTradingEnv(data=data_slice)
+        env = TradingEnv(data=data_slice)
         env = Monitor(env)
         return env
 
