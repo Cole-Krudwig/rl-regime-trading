@@ -4,12 +4,12 @@ import numpy as np
 import pandas as pd
 import math
 
-from src.Fetch import Fetch
-from src.StochasticFeatureEngine import StochasticFeatureEngine
-from src.TradingStrategies import TradingStrategies
+from .Fetch import Fetch
+from .FeatureEngine import FeatureEngine
+from .TradingStrategies import TradingStrategies
 
 
-class HJBTradingEnv(gym.Env):
+class TradingEnv(gym.Env):
     """
     Gymnasium environment for HJB-Guided Stochastic Regime Meta-Control.
     The agent maximizes the change in Power Utility (HJB objective).
@@ -189,10 +189,10 @@ class HJBTradingEnv(gym.Env):
                 self.current_step,
                 action
             )
-            print(f"Portfolio Return: {portfolio_return}")
+            # print(f"Portfolio Return: {portfolio_return}")
             # Update wealth
             self.current_wealth *= (1 + portfolio_return)
-            print(f"Wealth: {self.current_wealth}")
+            # print(f"Wealth: {self.current_wealth}")
 
             # --- 2. HJB-Informed Reward Calculation (Utility Change) ---
             current_utility = self._power_utility(self.current_wealth)
@@ -223,7 +223,7 @@ class HJBTradingEnv(gym.Env):
             self.obs_history.append(base_obs)
 
         observation = self._get_obs()
-        print(f"Step obs: {observation}")
+        # print(f"Step obs: {observation}")
 
         # Gymnasium step returns: observation, reward, terminated, truncated, info
         return observation, reward, terminated, False, info

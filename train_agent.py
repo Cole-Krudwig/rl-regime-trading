@@ -14,8 +14,8 @@ from stable_baselines3.common.callbacks import (
     StopTrainingOnNoModelImprovement,
 )
 
-from src.TradingEnv import HJBTradingEnv
-from src.StochasticFeatureEngine import StochasticFeatureEngine
+from src.TradingEnv import TradingEnv
+from src.FeatureEngine import FeatureEngine
 
 
 DATA_PATH = "data/spy.csv"
@@ -25,13 +25,13 @@ MODEL_DIR = "models"
 
 def make_trading_env(train: bool = True) -> gym.Env:
     """
-    Factory function to create a fresh HJBTradingEnv instance.
+    Factory function to create a fresh TradingEnv instance.
     You can use different splits for train/eval if you want.
     """
     df = pd.read_csv(DATA_PATH, index_col=0)
 
     # Feature engineering
-    engine = StochasticFeatureEngine(df)
+    engine = FeatureEngine(df)
     processed_df = engine.calculate_all_features()
     merged_df = pd.merge(
         df,
@@ -48,7 +48,7 @@ def make_trading_env(train: bool = True) -> gym.Env:
     else:
         data_slice = merged_df.iloc[split_idx:].copy()
 
-    env = HJBTradingEnv(data=data_slice)
+    env = TradingEnv(data=data_slice)
     env = Monitor(env)
     return env
 

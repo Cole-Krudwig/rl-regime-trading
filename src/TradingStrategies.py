@@ -99,8 +99,8 @@ class TradingStrategies:
         # Risky asset (log) return for day t
         risky_return = self.data['Log_Return'].iloc[t]
 
-        print(f"Weight: {weight_risky}")
-        print(f"Weight Cash: {weight_cash}")
+        # print(f"Weight: {weight_risky}")
+        # print(f"Weight Cash: {weight_cash}")
 
         # Risk-free per-period return
         risk_free_return = self.daily_rfr
