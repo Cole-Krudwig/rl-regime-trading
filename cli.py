@@ -1,7 +1,7 @@
 # cli.py
 
 from src.Fetch import Fetch
-from src.evaluate_benchmarks import BenchmarkEvaluator
+from src.BenchmarkEvaluator import BenchmarkEvaluator
 from src.Evaluate import ModelEvaluator
 from src.Train import Train
 import argparse
