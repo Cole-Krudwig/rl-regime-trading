@@ -39,9 +39,9 @@ At each time step, the RL agent outputs an **action** in `{0, 1, 2}`, which maps
 
 We track portfolio wealth \( W_t \) with:
 
-\[
+$$
 W\_{t+1} = W_t \left( 1 + \pi_t r_t + (1 - \pi_t) r_f \right),
-\]
+$$
 
 where:
 
@@ -51,9 +51,9 @@ where:
 
 Preferences are modeled via **CRRA utility**:
 
-\[
+$$
 U(W) = \frac{W^{1-\gamma}}{1-\gamma}, \quad \gamma > 1,
-\]
+$$
 
 with \(\gamma = 2\) in the current implementation. The reward is primarily the **change in utility** \( \Delta U*t = U(W*{t+1}) - U(W_t) \), optionally combined with a quadratic penalty on large returns to discourage extreme risk-taking.
 
