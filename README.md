@@ -113,12 +113,14 @@ python cli.py evaluate --symbol <symbol> --train-split <train/test split (e.g. 0
 ```
 An evaluation output will look like:
 
-========== Summary: Test Performance on Final 20% ==========
-Model  |  Steps |       FinalW |  TotRet% |   Sharpe
-----------------------------------------------------
-DQN    |   1275 |     19646.65 |    96.47 |    0.941
-PPO    |   1275 |     13518.35 |    35.18 |    0.597
-A2C    |   1275 |     16746.36 |    67.46 |    0.681
+### 3.3 Summary: Test Performance on Final 20%
+
+| Model | Steps |  FinalW   | TotRet% | Sharpe |
+|-------|:-----:|----------:|--------:|-------:|
+| DQN   |  1275 | 19646.65  |   96.47 |  0.941 |
+| PPO   |  1275 | 13518.35  |   35.18 |  0.597 |
+| A2C   |  1275 | 16746.36  |   67.46 |  0.681 |
+
 
 And also include benchmarks based on the naive strategies themselves.
 
