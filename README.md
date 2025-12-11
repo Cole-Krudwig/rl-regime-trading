@@ -124,6 +124,12 @@ An evaluation output will look like:
 
 And also include benchmarks based on the naive strategies themselves.
 
+### Demo Video
+
+<video src="https://github.com/user-attachments/assets/3c428a44-0058-448e-adde-f06bc3f6bbe1"><\video>
+
+
+
 ---
 
 ## 4. Repo Structure
